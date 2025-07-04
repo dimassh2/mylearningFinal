@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".LoginActivity">
+
+    <!-- Wadah untuk semua elemen agar mudah dipusatkan -->
+
+    <!-- Tombol Login dengan Google -->
+    <!-- Tombol ini sengaja diletakkan di bawah -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Wadah untuk dua logo berdampingan -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Ganti 'src' dengan logo universitas Anda di folder res/drawable -->
+            <ImageView
+                android:id="@+id/logo_universitas"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="16dp"
+                android:src="@mipmap/logo_hamzanwadi"
+                tools:ignore="ContentDescription" />
+
+            <!-- Ganti 'src' dengan logo kelas Anda di folder res/drawable -->
+            <ImageView
+                android:id="@+id/logo_kelas"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:src="@mipmap/logo_kelas"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <!-- Teks Judul -->
+
+        <!-- Teks Subjudul -->
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Selamat Datang di E-Learning"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/subtitle_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Silakan login untuk melanjutkan"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/google_sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="197dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="Login dengan Google"
+        android:textAllCaps="false"
+        app:icon="@drawable/ic_google_logo"
+        app:iconGravity="textStart"
+        app:iconPadding="12dp"
+        app:iconTint="@null" />
+    <!-- Pastikan ikon ini ada di res/drawable -->
+
+
+
+</RelativeLayout>

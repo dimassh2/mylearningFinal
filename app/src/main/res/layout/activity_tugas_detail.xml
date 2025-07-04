@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".TugasDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_detail_judul_tugas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            tools:text="Tugas Pemrograman Mobile" />
+
+        <TextView
+            android:id="@+id/tv_detail_deskripsi_tugas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:lineSpacingMultiplier="1.2"
+            tools:text="Buatlah aplikasi e-learning sederhana..." />
+
+        <Button
+            android:id="@+id/btn_buka_link_tugas"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Buka Link Lampiran"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginVertical="24dp" />
+
+        <TextView
+            android:id="@+id/tv_status_jawaban"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kirim Jawaban Anda"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/et_link_jawaban"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Link Jawaban (Google Drive, Github, dll)"
+            android:inputType="textUri"/>
+
+        <Button
+            android:id="@+id/btn_kirim_jawaban"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Kirim Jawaban" />
+
+        <Button
+            android:id="@+id/btn_lihat_rekap_jawaban"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lihat Jawaban Terkumpul (Admin)"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+    </LinearLayout>
+</ScrollView>

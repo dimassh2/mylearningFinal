@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme for Dark Mode. -->
+    <style name="Base.Theme.MyLearnig" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Warna Utama Aplikasi -->
+        <item name="colorPrimary">@color/green_primary</item>
+        <item name="colorPrimaryVariant">@color/green_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Warna Sekunder -->
+        <item name="colorSecondary">@color/green_primary</item>
+        <item name="colorSecondaryVariant">@color/green_dark</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Warna Status Bar -->
+        <item name="android:statusBarColor">@color/grey_background_dark</item>
+
+        <!-- Warna Background Default untuk Mode Gelap -->
+        <item name="android:windowBackground">@color/grey_background_dark</item>
+    </style>
+
+    <style name="Theme.MyLearnig" parent="Base.Theme.MyLearnig" />
+</resources>

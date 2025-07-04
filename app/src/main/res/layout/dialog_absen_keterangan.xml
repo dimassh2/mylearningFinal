@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kirim Absen"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+    <RadioGroup
+        android:id="@+id/rg_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <RadioButton android:id="@+id/rb_hadir" android:text="Hadir" />
+        <RadioButton android:id="@+id/rb_izin" android:text="Izin" />
+        <RadioButton android:id="@+id/rb_sakit" android:text="Sakit" />
+
+    </RadioGroup>
+    <EditText
+        android:id="@+id/et_keterangan_absen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tuliskan keterangan (untuk Izin/Sakit)"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"/>
+</LinearLayout>

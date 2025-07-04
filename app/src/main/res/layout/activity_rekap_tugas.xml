@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".RekapTugasActivity">
+
+    <TextView
+        android:id="@+id/tv_rekap_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rekap Jawaban Tugas"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_judul_tugas_rekap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_rekap_title"
+        android:layout_marginTop="8dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Tugas Pemrograman Mobile" />
+
+    <TextView
+        android:id="@+id/tv_deskripsi_tugas_rekap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_judul_tugas_rekap"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        tools:text="Buatlah aplikasi e-learning sederhana menggunakan Firebase." />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_rekap_tugas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_deskripsi_tugas_rekap"
+        tools:listitem="@layout/item_rekap_jawaban" />
+
+    <TextView
+        android:id="@+id/tv_no_jawaban"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Belum ada jawaban yang terkumpul."
+        android:visibility="gone" />
+
+</RelativeLayout>

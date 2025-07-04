@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Palet Warna Hijau Utama -->
+    <color name="green_primary">#10B981</color> <!-- Hijau cerah untuk tombol dan elemen utama -->
+    <color name="green_dark">#047857</color> <!-- Hijau lebih gelap untuk status bar -->
+    <color name="green_light">#A7F3D0</color> <!-- Hijau sangat terang untuk highlight atau background -->
+
+    <!-- Warna Dasar -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Warna Netral untuk Teks dan Background -->
+    <color name="grey_text">#616161</color>
+    <color name="grey_background_light">#F5F5F5</color>
+    <color name="grey_background_dark">#121212</color>
+</resources>

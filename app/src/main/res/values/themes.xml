@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme for Light Mode. -->
+    <style name="Base.Theme.MyLearnig" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Warna Utama Aplikasi -->
+        <item name="colorPrimary">@color/green_primary</item>
+        <item name="colorPrimaryVariant">@color/green_dark</item>
+        <item name="colorOnPrimary">@color/white</item> <!-- Warna teks di atas warna utama (misal: di tombol) -->
+
+        <!-- Warna Sekunder (bisa disamakan jika tidak dipakai) -->
+        <item name="colorSecondary">@color/green_primary</item>
+        <item name="colorSecondaryVariant">@color/green_dark</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Warna Status Bar -->
+        <item name="android:statusBarColor">@color/green_light</item>
+
+        <!-- Warna Background Default -->
+        <item name="android:windowBackground">@color/grey_background_light</item>
+    </style>
+
+    <style name="Theme.MyLearnig" parent="Base.Theme.MyLearnig" />
+</resources>

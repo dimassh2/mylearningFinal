@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RekapAbsenActivity">
+
+    <TextView
+        android:id="@+id/tv_rekap_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Rekap Absensi"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_rekap_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_rekap_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        tools:text="Mata Kuliah: Pemrograman Mobile" />
+
+    <ImageButton
+        android:id="@+id/btn_hapus_sesi"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="6dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Hapus Sesi Absensi Ini"
+        android:src="@drawable/ic_delete"
+        android:visibility="gone"
+        app:tint="?attr/colorError"
+        tools:visibility="visible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_rekap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_rekap_subtitle"
+        android:paddingTop="8dp"
+        tools:listitem="@layout/item_rekap_absen" />
+
+    <TextView
+        android:id="@+id/tv_no_rekap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Belum ada mahasiswa yang absen."
+        android:visibility="gone" />
+
+</RelativeLayout>

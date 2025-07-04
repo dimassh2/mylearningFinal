@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tambah Jadwal Baru"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/et_mata_kuliah"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mata Kuliah (Wajib)"
+        android:inputType="textCapWords"/>
+
+    <EditText
+        android:id="@+id/et_dosen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama Dosen"
+        android:layout_marginTop="8dp"
+        android:inputType="textPersonName"/>
+
+    <!-- Spinner untuk memilih hari -->
+    <Spinner
+        android:id="@+id/spinner_hari"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"/>
+
+    <EditText
+        android:id="@+id/et_tanggal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tanggal, cth: 31 Des 2024"
+        android:layout_marginTop="8dp"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/et_waktu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Waktu (Wajib), cth: 10:10 - 12:50"
+        android:layout_marginTop="8dp"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/et_ruang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ruang Kelas / Link"
+        android:layout_marginTop="8dp"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/btn_simpan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>
