@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.firebyte.elearning.databinding.FragmentProfileBinding;
@@ -52,18 +51,18 @@ public class ProfileFragment extends Fragment {
 
         if (getActivity() != null) {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestIdToken(getString(R.string.default_web_client_id)) // Pastikan string ini ada di res/values/strings.xml
                     .requestEmail()
                     .build();
             mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
         }
 
+        // Atur listener untuk tombol-tombol
         binding.logoutButton.setOnClickListener(v -> logout());
-
-        // PERBAIKAN: Menggunakan ID tombol yang benar (fab_edit_profile)
-        binding.fabEditProfile.setOnClickListener(v -> toggleEditMode(true));
-
-        binding.btnSaveProfile.setOnClickListener(v -> saveProfileChanges());
+        binding.btnEditProfile.setOnClickListener(v -> toggleEditMode(true));
+        binding.btnSaveProfile.setOnClickListener(v -> {
+            saveProfileChanges();
+        });
     }
 
     private void loadUserProfile() {
@@ -73,7 +72,7 @@ public class ProfileFragment extends Fragment {
             if (documentSnapshot.exists()) {
                 currentUserData = documentSnapshot.toObject(User.class);
                 if (currentUserData != null) {
-                    // Mengisi data ke tampilan profil yang baru
+                    // Mengisi data ke tampilan profil
                     binding.profileName.setText(currentUserData.getNama());
                     binding.profileEmail.setText(currentUserData.getEmail());
                     binding.profileNim.setText("NIM: " + currentUserData.getNim());
@@ -95,34 +94,26 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    /**
+     * Mengatur visibilitas elemen UI antara mode lihat dan mode edit.
+     * @param isEditing True untuk masuk ke mode edit, false untuk kembali ke mode lihat.
+     */
     private void toggleEditMode(boolean isEditing) {
         if (binding == null) return;
 
-        int viewMode = isEditing ? View.GONE : View.VISIBLE;
-        int editMode = isEditing ? View.VISIBLE : View.GONE;
+        int viewModeVisibility = isEditing ? View.GONE : View.VISIBLE;
+        int editModeVisibility = isEditing ? View.VISIBLE : View.GONE;
 
-        // Sembunyikan/Tampilkan CardView dan informasi utama
-        for (int i = 0; i < binding.getRoot().getChildCount(); i++) {
-            View child = binding.getRoot().getChildAt(i);
-            if (child instanceof CardView || child.getId() == R.id.profile_name || child.getId() == R.id.profile_email) {
-                child.setVisibility(viewMode);
-            }
-        }
+        // Tampilkan/sembunyikan kontainer profil (mode lihat)
+        binding.viewProfileContainer.setVisibility(viewModeVisibility);
+        // Tampilkan/sembunyikan kontainer tombol (Edit & Logout)
+        binding.buttonContainer.setVisibility(viewModeVisibility);
 
-        // Tampilkan/Sembunyikan EditTexts dan tombol Simpan
-        binding.editProfileName.setVisibility(editMode);
-        binding.editProfileNim.setVisibility(editMode);
-        binding.editProfileJurusan.setVisibility(editMode);
-        binding.editProfileKelas.setVisibility(editMode);
-        binding.editProfileBio.setVisibility(editMode);
-        binding.editProfileAlamat.setVisibility(editMode);
-        binding.btnSaveProfile.setVisibility(editMode);
+        // Tampilkan/sembunyikan kontainer formulir (mode edit)
+        binding.editProfileContainer.setVisibility(editModeVisibility);
 
-        // Tombol FAB Edit hanya terlihat saat tidak dalam mode edit
-        binding.fabEditProfile.setVisibility(viewMode);
-
+        // Jika masuk ke mode edit, isi formulir dengan data saat ini
         if (isEditing && currentUserData != null) {
-            // Isi EditText dengan data saat ini untuk diedit
             binding.editProfileName.setText(currentUserData.getNama());
             binding.editProfileNim.setText(currentUserData.getNim());
             binding.editProfileJurusan.setText(currentUserData.getJurusan());
@@ -157,8 +148,10 @@ public class ProfileFragment extends Fragment {
         userRef.update(updates).addOnSuccessListener(aVoid -> {
             if (isAdded() && getContext() != null) {
                 Toast.makeText(getContext(), "Profil berhasil diperbarui", Toast.LENGTH_SHORT).show();
+                // Setelah menyimpan, kembali ke mode tampilan
                 toggleEditMode(false);
-                loadUserProfile(); // Muat ulang data yang sudah diperbarui
+                // Muat ulang data yang sudah diperbarui untuk ditampilkan
+                loadUserProfile();
             }
         }).addOnFailureListener(e -> {
             if (isAdded() && getContext() != null) {

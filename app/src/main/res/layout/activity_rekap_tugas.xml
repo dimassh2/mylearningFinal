@@ -3,49 +3,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".RekapTugasActivity">
 
-    <TextView
-        android:id="@+id/tv_rekap_title"
-        android:layout_width="wrap_content"
+    <!-- AppBar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Rekap Jawaban Tugas"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:layout_alignParentTop="true">
 
-    <TextView
-        android:id="@+id/tv_judul_tugas_rekap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_rekap_title"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:text="Tugas Pemrograman Mobile" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
 
-    <TextView
-        android:id="@+id/tv_deskripsi_tugas_rekap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_judul_tugas_rekap"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="16dp"
-        tools:text="Buatlah aplikasi e-learning sederhana menggunakan Firebase." />
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Rekap Jawaban"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_rekap_tugas"
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Kontainer Konten -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_deskripsi_tugas_rekap"
-        tools:listitem="@layout/item_rekap_jawaban" />
+        android:layout_below="@id/app_bar_layout"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tv_no_jawaban"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Belum ada jawaban yang terkumpul."
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/tv_judul_tugas_rekap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Tugas Pemrograman Mobile" />
 
+        <TextView
+            android:id="@+id/tv_deskripsi_tugas_rekap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_judul_tugas_rekap"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            tools:text="Buatlah aplikasi e-learning sederhana menggunakan Firebase." />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_rekap_tugas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_deskripsi_tugas_rekap"
+            tools:listitem="@layout/item_rekap_jawaban" />
+
+        <TextView
+            android:id="@+id/tv_no_jawaban"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Belum ada jawaban yang terkumpul."
+            android:visibility="gone" />
+    </RelativeLayout>
 </RelativeLayout>

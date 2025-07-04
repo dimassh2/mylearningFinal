@@ -6,21 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_edit_profile"
-        android:layout_width="wrap_content"
+    <!-- AppBar di bagian paling atas -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_edit"
-        app:fabSize="mini"
-        android:contentDescription="Edit Profil" />
+        android:layout_alignParentTop="true">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Profil"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Kontainer untuk konten yang bisa di-scroll -->
     <ScrollView
+        android:id="@+id/scroll_view_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/logout_button"
+        android:layout_above="@+id/button_container"
+        android:layout_below="@id/app_bar_layout"
         android:clipToPadding="false"
         android:paddingBottom="16dp">
 
@@ -31,136 +48,171 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                tools:src="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/profile_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                tools:text="Nama Pengguna" />
-
-            <TextView
-                android:id="@+id/profile_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                tools:text="email@pengguna.com" />
-
-            <androidx.cardview.widget.CardView
+            <!-- Kontainer untuk Tampilan Profil (Mode Lihat) -->
+            <LinearLayout
+                android:id="@+id/view_profile_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <LinearLayout
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    tools:src="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="Nama Pengguna" />
+
+                <TextView
+                    android:id="@+id/profile_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="email@pengguna.com" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Info Akademik"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="12dp"/>
+                    android:layout_marginTop="24dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_badge" android:layout_marginEnd="16dp" app:tint="?attr/colorPrimary"/>
-                        <TextView android:id="@+id/profile_nim" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="NIM: 123456789" />
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Info Akademik"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="12dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_badge" android:layout_marginEnd="16dp" app:tint="?attr/colorPrimary"/>
+                            <TextView android:id="@+id/profile_nim" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="NIM: 123456789" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_school" android:layout_marginEnd="16dp" app:tint="?attr/colorPrimary"/>
+                            <TextView android:id="@+id/profile_jurusan" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Jurusan: Teknik Informatika" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_class" android:layout_marginEnd="16dp" app:tint="?attr/colorPrimary"/>
+                            <TextView android:id="@+id/profile_kelas" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Kelas: TI-F" />
+                        </LinearLayout>
                     </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_school" android:layout_marginEnd="16dp" app:tint="?attr/colorPrimary"/>
-                        <TextView android:id="@+id/profile_jurusan" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Jurusan: Teknik Informatika" />
-                    </LinearLayout>
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Info Pribadi"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="12dp"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_class" android:layout_marginEnd="16dp" app:tint="?attr/colorPrimary"/>
-                        <TextView android:id="@+id/profile_kelas" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Kelas: TI-F" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_info" android:layout_marginEnd="16dp" app:tint="?attr/colorPrimary"/>
+                            <TextView android:id="@+id/profile_bio" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Bio: Sederhana" />
+                        </LinearLayout>
 
-            <androidx.cardview.widget.CardView
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_location" android:layout_marginEnd="16dp" app:tint="?attr/colorPrimary"/>
+                            <TextView android:id="@+id/profile_alamat" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Alamat: Aikmel" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- Kontainer untuk Formulir Edit (Mode Edit) -->
+            <LinearLayout
+                android:id="@+id/edit_profile_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Info Pribadi"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="12dp"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_info" android:layout_marginEnd="16dp" app:tint="?attr/colorPrimary"/>
-                        <TextView android:id="@+id/profile_bio" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Bio: Sederhana" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_location" android:layout_marginEnd="16dp" app:tint="?attr/colorPrimary"/>
-                        <TextView android:id="@+id/profile_alamat" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="Alamat: Aikmel" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <EditText android:id="@+id/edit_profile_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:hint="Nama Lengkap" android:visibility="gone" tools:visibility="visible"/>
-            <EditText android:id="@+id/edit_profile_nim" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="NIM" android:visibility="gone" tools:visibility="visible"/>
-            <EditText android:id="@+id/edit_profile_jurusan" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Jurusan" android:visibility="gone" tools:visibility="visible"/>
-            <EditText android:id="@+id/edit_profile_kelas" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Kelas" android:visibility="gone" tools:visibility="visible"/>
-            <EditText android:id="@+id/edit_profile_bio" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Bio" android:visibility="gone" tools:visibility="visible"/>
-            <EditText android:id="@+id/edit_profile_alamat" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Alamat" android:visibility="gone" tools:visibility="visible"/>
-            <Button android:id="@+id/btn_save_profile" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="Simpan Perubahan" android:visibility="gone" />
-
+                <EditText android:id="@+id/edit_profile_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:hint="Nama Lengkap"/>
+                <EditText android:id="@+id/edit_profile_nim" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="NIM"/>
+                <EditText android:id="@+id/edit_profile_jurusan" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Jurusan"/>
+                <EditText android:id="@+id/edit_profile_kelas" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Kelas"/>
+                <EditText android:id="@+id/edit_profile_bio" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Bio"/>
+                <EditText android:id="@+id/edit_profile_alamat" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Alamat"/>
+                <Button android:id="@+id/btn_save_profile" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="Simpan Perubahan"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/logout_button"
+    <!-- Kontainer untuk tombol di bagian bawah -->
+    <LinearLayout
+        android:id="@+id/button_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
-        android:backgroundTint="?attr/colorError"
-        android:text="Logout" />
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp">
+
+        <Button
+            android:id="@+id/btn_edit_profile"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Profil" />
+
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="?attr/colorError"
+            android:text="Logout" />
+    </LinearLayout>
 </RelativeLayout>

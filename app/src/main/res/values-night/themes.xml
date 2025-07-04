@@ -11,12 +11,20 @@
         <item name="colorSecondaryVariant">@color/green_dark</item>
         <item name="colorOnSecondary">@color/white</item>
 
-        <!-- Warna Status Bar -->
-        <item name="android:statusBarColor">@color/grey_background_dark</item>
+        <!-- Warna Status Bar (disesuaikan agar konsisten dengan AppBar) -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
         <!-- Warna Background Default untuk Mode Gelap -->
         <item name="android:windowBackground">@color/grey_background_dark</item>
+
+        <!-- Menetapkan style default untuk AppBarLayout -->
+        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
     </style>
 
     <style name="Theme.MyLearnig" parent="Base.Theme.MyLearnig" />
+
+    <!-- PERBAIKAN: Style kustom untuk AppBarLayout ditambahkan di sini -->
+    <style name="Widget.App.AppBarLayout" parent="Widget.Material3.AppBarLayout">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
 </resources>

@@ -29,7 +29,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="12sp"
-            tools:text="Deadline: 10 Jul 2025" />
+            tools:text="Dibuat pada: 10 Jul 2025" />
+
+        <!-- Ikon Tugas Ditambahkan di Sini -->
+        <ImageView
+            android:id="@+id/task_icon"
+            android:layout_width="87dp"
+            android:layout_height="81dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:contentDescription="Ikon Tugas"
+            android:src="@drawable/ic_task"
+            app:tint="?attr/colorPrimary" />
 
         <Button
             android:id="@+id/btn_kerjakan_tugas"
@@ -37,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="7dp"
             android:text="Kerjakan" />
 
     </LinearLayout>
