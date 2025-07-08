@@ -34,7 +34,6 @@ public class MaterialFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setupRecyclerView();
         setupAdminFeatures();
     }
@@ -47,8 +46,6 @@ public class MaterialFragment extends Fragment {
         if (getContext() == null) return;
 
         adapter = new MateriAdapter(options, requireContext());
-
-        // Implementasi listener untuk tombol hapus
         adapter.setOnItemClickListener(new MateriAdapter.OnItemClickListener() {
             @Override
             public void onDeleteClick(DocumentSnapshot documentSnapshot) {
@@ -64,8 +61,14 @@ public class MaterialFragment extends Fragment {
                             .show();
                 }
             }
-        });
 
+            @Override
+            public void onEditClick(DocumentSnapshot documentSnapshot) {
+                // Panggil dialog edit dengan data yang ada
+                Materi materi = documentSnapshot.toObject(Materi.class);
+                showMateriDialog(documentSnapshot, materi);
+            }
+        });
         binding.recyclerViewMateri.setLayoutManager(new SafeLinearLayoutManager(getContext()));
         binding.recyclerViewMateri.setAdapter(adapter);
     }
@@ -74,14 +77,14 @@ public class MaterialFragment extends Fragment {
         UserManager.checkAdminStatus(isAdmin -> {
             if (binding != null && isAdded() && isAdmin) {
                 binding.fabAddMateri.setVisibility(View.VISIBLE);
-                binding.fabAddMateri.setOnClickListener(v -> showAddMateriDialog());
+                binding.fabAddMateri.setOnClickListener(v -> showMateriDialog(null, null));
             } else if (binding != null) {
                 binding.fabAddMateri.setVisibility(View.GONE);
             }
         });
     }
 
-    private void showAddMateriDialog() {
+    private void showMateriDialog(@Nullable DocumentSnapshot snapshot, @Nullable Materi materi) {
         if (getContext() == null || !isAdded()) return;
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_materi, null);
         final EditText etMataKuliah = dialogView.findViewById(R.id.et_mata_kuliah_materi);
@@ -90,7 +93,14 @@ public class MaterialFragment extends Fragment {
         final EditText etLink = dialogView.findViewById(R.id.et_link_lampiran);
         final Button btnSimpan = dialogView.findViewById(R.id.btn_simpan_materi);
 
-        AlertDialog dialog = new AlertDialog.Builder(getContext()).setView(dialogView).create();
+        final AlertDialog dialog = new AlertDialog.Builder(getContext()).setView(dialogView).create();
+
+        if (materi != null) {
+            etMataKuliah.setText(materi.getMataKuliah());
+            etJudul.setText(materi.getJudul());
+            etDosen.setText(materi.getDosen());
+            etLink.setText(materi.getLampiranUrl());
+        }
 
         btnSimpan.setOnClickListener(v -> {
             String mataKuliah = etMataKuliah.getText().toString().trim();
@@ -101,35 +111,43 @@ public class MaterialFragment extends Fragment {
                 Toast.makeText(getContext(), "Semua field wajib diisi", Toast.LENGTH_SHORT).show();
                 return;
             }
-            saveMateriToFirestore(mataKuliah, judul, dosen, linkLampiran, dialog);
+            saveMateriToFirestore(snapshot, mataKuliah, judul, dosen, linkLampiran, dialog);
         });
         dialog.show();
     }
 
-    private void saveMateriToFirestore(String mataKuliah, String judul, String dosen, String url, AlertDialog dialog) {
+    private void saveMateriToFirestore(@Nullable DocumentSnapshot snapshot, String mataKuliah, String judul, String dosen, String url, AlertDialog dialog) {
         Materi materiBaru = new Materi(mataKuliah, judul, dosen, url, "LINK");
-        materiRef.add(materiBaru).addOnSuccessListener(aVoid -> {
-            if (isAdded() && getContext() != null) {
-                Toast.makeText(getContext(), "Materi berhasil ditambahkan", Toast.LENGTH_SHORT).show();
-            }
-            dialog.dismiss();
-        });
+
+        if (snapshot == null) {
+            // Mode Tambah
+            materiRef.add(materiBaru).addOnSuccessListener(aVoid -> {
+                if (isAdded() && getContext() != null) {
+                    Toast.makeText(getContext(), "Materi berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            });
+        } else {
+            // Mode Edit
+            snapshot.getReference().set(materiBaru).addOnSuccessListener(aVoid -> {
+                if (isAdded() && getContext() != null) {
+                    Toast.makeText(getContext(), "Materi berhasil diperbarui", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            });
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (adapter != null) {
-            adapter.startListening();
-        }
+        if (adapter != null) adapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (adapter != null) {
-            adapter.stopListening();
-        }
+        if (adapter != null) adapter.stopListening();
     }
 
     @Override

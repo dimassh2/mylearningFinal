@@ -31,14 +31,20 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_jadwal"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/app_bar_layout"
-        android:padding="8dp"
-        tools:listitem="@layout/item_jadwal"/>
+        android:layout_below="@id/app_bar_layout">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_jadwal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            tools:listitem="@layout/item_jadwal"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <TextView
         android:id="@+id/tv_empty"
         android:layout_width="wrap_content"

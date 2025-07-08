@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +23,7 @@ public class MateriAdapter extends FirestoreRecyclerAdapter<Materi, MateriAdapte
 
     public interface OnItemClickListener {
         void onDeleteClick(DocumentSnapshot documentSnapshot);
+        void onEditClick(DocumentSnapshot documentSnapshot); // Metode edit baru
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -56,7 +59,6 @@ public class MateriAdapter extends FirestoreRecyclerAdapter<Materi, MateriAdapte
         }
 
         void bind(Materi materi, DocumentSnapshot snapshot) {
-            // PERBAIKAN: Memberi nilai default jika data null untuk mencegah error
             binding.tvJudulMateri.setText(materi.getJudul() != null ? materi.getJudul() : "Tanpa Judul");
             binding.tvMatkulMateri.setText(materi.getMataKuliah() != null ? materi.getMataKuliah() : "Mata Kuliah Umum");
             binding.tvDosenMateri.setText("Dosen: " + (materi.getDosen() != null ? materi.getDosen() : "-"));
@@ -77,10 +79,16 @@ public class MateriAdapter extends FirestoreRecyclerAdapter<Materi, MateriAdapte
 
             UserManager.checkAdminStatus(isAdmin -> {
                 binding.deleteButtonMateri.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+                binding.editButtonMateri.setVisibility(isAdmin ? View.VISIBLE : View.GONE); // Menampilkan tombol edit
                 if (isAdmin) {
                     binding.deleteButtonMateri.setOnClickListener(v -> {
                         if (listener != null) {
                             listener.onDeleteClick(snapshot);
+                        }
+                    });
+                    binding.editButtonMateri.setOnClickListener(v -> { // Listener untuk edit
+                        if (listener != null) {
+                            listener.onEditClick(snapshot);
                         }
                     });
                 }

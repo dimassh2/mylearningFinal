@@ -6,38 +6,31 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.DocumentSnapshot;
 
-public class JadwalAdapter extends FirestoreRecyclerAdapter<Jadwal, JadwalAdapter.JadwalViewHolder> {
+public class JadwalAdapter extends ListAdapter<Jadwal, JadwalAdapter.JadwalViewHolder> {
 
     private OnItemClickListener listener;
 
-    public JadwalAdapter(@NonNull FirestoreRecyclerOptions<Jadwal> options) {
-        super(options);
+    public JadwalAdapter() {
+        super(DIFF_CALLBACK);
     }
 
-    @Override
-    protected void onBindViewHolder(@NonNull JadwalViewHolder holder, int position, @NonNull Jadwal model) {
-        holder.tvMataKuliah.setText(model.getMataKuliah());
-        holder.tvDosen.setText("Dosen: " + model.getDosen());
-        holder.tvRuang.setText("Ruang: " + model.getRuang());
-        String waktuLengkap = model.getHari() + ", " + model.getTanggal() + " | " + model.getWaktu();
-        holder.tvWaktu.setText(waktuLengkap);
+    private static final DiffUtil.ItemCallback<Jadwal> DIFF_CALLBACK = new DiffUtil.ItemCallback<Jadwal>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Jadwal oldItem, @NonNull Jadwal newItem) {
+            return oldItem.getId().equals(newItem.getId());
+        }
 
-
-        // Menampilkan tombol hapus hanya jika pengguna adalah admin
-// Menampilkan tombol hapus hanya jika pengguna adalah admin
-        UserManager.checkAdminStatus(isAdmin -> {
-            if (isAdmin) {
-                holder.btnDelete.setVisibility(View.VISIBLE);
-            } else {
-                holder.btnDelete.setVisibility(View.GONE);
-            }
-        });
-    }
+        @Override
+        public boolean areContentsTheSame(@NonNull Jadwal oldItem, @NonNull Jadwal newItem) {
+            return oldItem.getMataKuliah().equals(newItem.getMataKuliah()) &&
+                    oldItem.getDosen().equals(newItem.getDosen()) &&
+                    oldItem.getWaktu().equals(newItem.getWaktu());
+        }
+    };
 
     @NonNull
     @Override
@@ -46,9 +39,28 @@ public class JadwalAdapter extends FirestoreRecyclerAdapter<Jadwal, JadwalAdapte
         return new JadwalViewHolder(view);
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull JadwalViewHolder holder, int position) {
+        Jadwal currentJadwal = getItem(position);
+        holder.tvMataKuliah.setText(currentJadwal.getMataKuliah());
+        holder.tvDosen.setText("Dosen: " + currentJadwal.getDosen());
+        holder.tvRuang.setText("Ruang: " + currentJadwal.getRuang());
+        String waktuLengkap = currentJadwal.getHari() + ", " + (currentJadwal.getTanggal() != null && !currentJadwal.getTanggal().isEmpty() ? currentJadwal.getTanggal() : "") + " | " + currentJadwal.getWaktu();
+        holder.tvWaktu.setText(waktuLengkap);
+
+        UserManager.checkAdminStatus(isAdmin -> {
+            holder.btnDelete.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+            holder.btnEdit.setVisibility(isAdmin ? View.VISIBLE : View.GONE); // Tampilkan tombol edit untuk admin
+        });
+    }
+
+    public Jadwal getJadwalAt(int position) {
+        return getItem(position);
+    }
+
     class JadwalViewHolder extends RecyclerView.ViewHolder {
         TextView tvMataKuliah, tvDosen, tvRuang, tvWaktu;
-        ImageButton btnDelete;
+        ImageButton btnDelete, btnEdit; // Tambahkan btnEdit
 
         public JadwalViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,18 +69,28 @@ public class JadwalAdapter extends FirestoreRecyclerAdapter<Jadwal, JadwalAdapte
             tvRuang = itemView.findViewById(R.id.tv_ruang);
             tvWaktu = itemView.findViewById(R.id.tv_waktu);
             btnDelete = itemView.findViewById(R.id.delete_button);
+            btnEdit = itemView.findViewById(R.id.edit_button); // Inisialisasi btnEdit
 
             btnDelete.setOnClickListener(v -> {
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && listener != null) {
-                    listener.onDeleteClick(getSnapshots().getSnapshot(position));
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    listener.onDeleteClick(getItem(position));
+                }
+            });
+
+            // Tambahkan listener untuk tombol edit
+            btnEdit.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    listener.onEditClick(getItem(position));
                 }
             });
         }
     }
 
     public interface OnItemClickListener {
-        void onDeleteClick(DocumentSnapshot documentSnapshot);
+        void onDeleteClick(Jadwal jadwal);
+        void onEditClick(Jadwal jadwal); // Tambahkan metode baru
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

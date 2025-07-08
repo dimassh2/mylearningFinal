@@ -17,8 +17,7 @@
             android:id="@+id/info_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/delete_button"
-            android:orientation="vertical">
+            android:layout_toStartOf="@+id/edit_button" android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_mata_kuliah"
@@ -52,7 +51,6 @@
 
         </LinearLayout>
 
-        <!-- Tombol hapus, hanya terlihat untuk admin -->
         <ImageButton
             android:id="@+id/delete_button"
             android:layout_width="48dp"
@@ -64,6 +62,16 @@
             android:visibility="gone"
             android:contentDescription="Hapus Jadwal"/>
 
-    </RelativeLayout>
+        <ImageButton
+            android:id="@+id/edit_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_toStartOf="@id/delete_button"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_edit"
+            android:visibility="gone"
+            android:contentDescription="Edit Jadwal"/>
 
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -1,16 +1,19 @@
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
+    // TAMBAHKAN DUA PLUGIN INI
+    id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 android {
     namespace = "com.firebyte.elearning"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.firebyte.elearning"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -27,6 +30,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    // Opsi Kotlin (bisa ditambahkan untuk konsistensi)
+    kotlinOptions {
+        jvmTarget = "11"
     }
 }
 
@@ -54,9 +61,15 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
-
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // --- DEPENDENSI ROOM DATABASE ---
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion") // Menggunakan kapt
+    implementation("androidx.room:room-ktx:$roomVersion")
+    // ----------------------------
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -17,6 +18,7 @@ public class TugasAdapter extends FirestoreRecyclerAdapter<Tugas, TugasAdapter.T
 
     public interface OnTugasItemClickListener {
         void onDeleteClick(DocumentSnapshot documentSnapshot);
+        void onEditClick(DocumentSnapshot documentSnapshot); // Metode edit baru
     }
 
     public void setOnTugasItemClickListener(OnTugasItemClickListener listener) {
@@ -29,7 +31,6 @@ public class TugasAdapter extends FirestoreRecyclerAdapter<Tugas, TugasAdapter.T
 
     @Override
     protected void onBindViewHolder(@NonNull TugasViewHolder holder, int position, @NonNull Tugas model) {
-        // Mengirim ID dokumen ke ViewHolder agar bisa digunakan saat tombol diklik
         String docId = getSnapshots().getSnapshot(position).getId();
         holder.bind(model, docId);
     }
@@ -46,14 +47,12 @@ public class TugasAdapter extends FirestoreRecyclerAdapter<Tugas, TugasAdapter.T
 
         public TugasViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Menggunakan ViewBinding untuk mengakses semua view dengan aman
             binding = ItemTugasBinding.bind(itemView);
         }
 
         void bind(Tugas tugas, String tugasId) {
-            // Menggunakan ID yang benar dari layout
             binding.tvNamaPelajaran.setText(tugas.getMataKuliah());
-            binding.tvNamaGuru.setText(tugas.getDeskripsi()); // Menampilkan deskripsi di sini
+            binding.tvNamaGuru.setText(tugas.getDeskripsi());
 
             if (tugas.getLampiranUrl() != null && !tugas.getLampiranUrl().isEmpty()) {
                 binding.tvSisaWaktu.setText("Ada lampiran (" + tugas.getTipeLampiran() + ")");
@@ -61,14 +60,20 @@ public class TugasAdapter extends FirestoreRecyclerAdapter<Tugas, TugasAdapter.T
                 binding.tvSisaWaktu.setText("Tidak ada lampiran");
             }
 
-            // Menampilkan tombol hapus untuk admin
             UserManager.checkAdminStatus(isAdmin -> {
+                binding.deleteButtonTugas.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+                binding.editButtonTugas.setVisibility(isAdmin ? View.VISIBLE : View.GONE); // Menampilkan tombol edit
                 if (isAdmin) {
-                    binding.deleteButtonTugas.setVisibility(View.VISIBLE);
                     binding.deleteButtonTugas.setOnClickListener(v -> {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION && listener != null) {
                             listener.onDeleteClick(getSnapshots().getSnapshot(position));
+                        }
+                    });
+                    binding.editButtonTugas.setOnClickListener(v -> { // Listener untuk edit
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION && listener != null) {
+                            listener.onEditClick(getSnapshots().getSnapshot(position));
                         }
                     });
                 } else {
@@ -76,7 +81,6 @@ public class TugasAdapter extends FirestoreRecyclerAdapter<Tugas, TugasAdapter.T
                 }
             });
 
-            // Memberi aksi pada tombol "Kerjakan"
             binding.btnKerjakan.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), TugasDetailActivity.class);
                 intent.putExtra("TUGAS_ID", tugasId);

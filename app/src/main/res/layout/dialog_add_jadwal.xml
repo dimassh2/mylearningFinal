@@ -28,7 +28,6 @@
         android:layout_marginTop="8dp"
         android:inputType="textPersonName"/>
 
-    <!-- Spinner untuk memilih hari -->
     <Spinner
         android:id="@+id/spinner_hari"
         android:layout_width="match_parent"
@@ -40,7 +39,7 @@
         android:id="@+id/et_tanggal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tanggal, cth: 31 Des 2024"
+        android:hint="Tanggal (Opsional)"
         android:layout_marginTop="8dp"
         android:inputType="text"/>
 
