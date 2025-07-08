@@ -49,7 +49,7 @@ Untuk menjalankan proyek ini di lingkungan lokal Anda, ikuti langkah-langkah ber
 
 1.  **Clone Repositori**
     ```bash
-    git clone [https://github.com/kotkaaja/mylearningFinal.git](https://github.com/kotkaaja/mylearningFinal.git)
+    git clone https://github.com/kotkaaja/mylearningFinal.git
     ```
 
 2.  **Buka di Android Studio**
