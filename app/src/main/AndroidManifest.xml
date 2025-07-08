@@ -18,7 +18,7 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,28 +27,28 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".core.MainActivity"
             android:exported="false" />
 
         <activity
-            android:name=".TugasDetailActivity"
+            android:name=".ui.tugas.TugasDetailActivity"
             android:exported="false" />
 
         <activity
-            android:name=".RekapAbsenActivity"
+            android:name=".ui.absen.RekapAbsenActivity"
             android:exported="false" />
 
         <activity
-            android:name=".RekapTugasActivity"
+            android:name=".ui.tugas.RekapTugasActivity"
             android:exported="false" />
 
         <receiver
-            android:name=".AlarmReceiver"
+            android:name=".utils.AlarmReceiver"
             android:enabled="true"
             android:exported="false" />
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".utils.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
