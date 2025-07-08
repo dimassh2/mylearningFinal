@@ -20,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebyte.elearning.R;
 import com.firebyte.elearning.core.UserManager;
@@ -28,7 +30,9 @@ import com.firebyte.elearning.databinding.FragmentScheduleBinding;
 import com.firebyte.elearning.utils.AlarmReceiver;
 import com.firebyte.elearning.utils.SafeLinearLayoutManager;
 import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,6 +57,32 @@ public class ScheduleFragment extends Fragment {
         checkAndRequestAlarmPermission();
         setupRecyclerView();
         setupAdminFeatures();
+
+        // --- LOGIKA BARU UNTUK DRAG-AND-DROP ---
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                int fromPosition = viewHolder.getAbsoluteAdapterPosition();
+                int toPosition = target.getAbsoluteAdapterPosition();
+
+                if (fromPosition != RecyclerView.NO_POSITION && toPosition != RecyclerView.NO_POSITION) {
+                    List<Jadwal> currentList = new ArrayList<>(adapter.getCurrentList());
+                    Collections.swap(currentList, fromPosition, toPosition);
+                    adapter.submitList(currentList);
+                }
+                return true;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                // Swipe tidak diimplementasikan
+            }
+        };
+
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.recyclerViewJadwal);
+        // --- AKHIR LOGIKA BARU ---
+
 
         jadwalViewModel = new ViewModelProvider(this).get(JadwalViewModel.class);
         jadwalViewModel.getAllJadwal().observe(getViewLifecycleOwner(), jadwalList -> {
@@ -112,7 +142,6 @@ public class ScheduleFragment extends Fragment {
         });
     }
 
-    // --- FUNGSI DIALOG BARU YANG BISA TAMBAH & EDIT ---
     private void showJadwalDialog(@Nullable Jadwal jadwal) {
         if (getContext() == null || !isAdded()) return;
 
@@ -185,7 +214,6 @@ public class ScheduleFragment extends Fragment {
         dialog.show();
     }
 
-    // --- SISA KODE (Alarm, dll.) TETAP SAMA ---
     private void scheduleRemindersForAll(List<Jadwal> jadwalList) {
         if (getContext() == null) return;
         for (Jadwal j : jadwalList) {
