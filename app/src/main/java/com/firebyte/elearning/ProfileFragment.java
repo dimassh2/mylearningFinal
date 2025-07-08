@@ -51,17 +51,39 @@ public class ProfileFragment extends Fragment {
 
         if (getActivity() != null) {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id)) // Pastikan string ini ada di res/values/strings.xml
+                    .requestIdToken(getString(R.string.default_web_client_id))
                     .requestEmail()
                     .build();
             mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
         }
 
-        // Atur listener untuk tombol-tombol
-        binding.logoutButton.setOnClickListener(v -> logout());
-        binding.btnEditProfile.setOnClickListener(v -> toggleEditMode(true));
+        // --- PERUBAHAN UTAMA DI SINI ---
+        setupToolbarMenu(); // Panggil method baru untuk setup menu
+
+        // HAPUS LISTENER TOMBOL LAMA
+        // binding.logoutButton.setOnClickListener(v -> logout());
+        // binding.btnEditProfile.setOnClickListener(v -> toggleEditMode(true));
+
+        // Listener untuk tombol simpan tetap sama
         binding.btnSaveProfile.setOnClickListener(v -> {
             saveProfileChanges();
+        });
+    }
+
+    private void setupToolbarMenu() {
+        if (binding == null) return;
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_edit_profile) {
+                // Panggil fungsi untuk masuk ke mode edit
+                toggleEditMode(true);
+                return true;
+            } else if (itemId == R.id.action_logout) {
+                // Panggil fungsi logout
+                logout();
+                return true;
+            }
+            return false;
         });
     }
 
@@ -72,7 +94,6 @@ public class ProfileFragment extends Fragment {
             if (documentSnapshot.exists()) {
                 currentUserData = documentSnapshot.toObject(User.class);
                 if (currentUserData != null) {
-                    // Mengisi data ke tampilan profil
                     binding.profileName.setText(currentUserData.getNama());
                     binding.profileEmail.setText(currentUserData.getEmail());
                     binding.profileNim.setText("NIM: " + currentUserData.getNim());
@@ -94,25 +115,19 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    /**
-     * Mengatur visibilitas elemen UI antara mode lihat dan mode edit.
-     * @param isEditing True untuk masuk ke mode edit, false untuk kembali ke mode lihat.
-     */
     private void toggleEditMode(boolean isEditing) {
         if (binding == null) return;
 
         int viewModeVisibility = isEditing ? View.GONE : View.VISIBLE;
         int editModeVisibility = isEditing ? View.VISIBLE : View.GONE;
 
-        // Tampilkan/sembunyikan kontainer profil (mode lihat)
         binding.viewProfileContainer.setVisibility(viewModeVisibility);
-        // Tampilkan/sembunyikan kontainer tombol (Edit & Logout)
-        binding.buttonContainer.setVisibility(viewModeVisibility);
 
-        // Tampilkan/sembunyikan kontainer formulir (mode edit)
+        // HAPUS REFERENSI KE buttonContainer YANG SUDAH DIHAPUS
+        // binding.buttonContainer.setVisibility(viewModeVisibility);
+
         binding.editProfileContainer.setVisibility(editModeVisibility);
 
-        // Jika masuk ke mode edit, isi formulir dengan data saat ini
         if (isEditing && currentUserData != null) {
             binding.editProfileName.setText(currentUserData.getNama());
             binding.editProfileNim.setText(currentUserData.getNim());
@@ -148,9 +163,7 @@ public class ProfileFragment extends Fragment {
         userRef.update(updates).addOnSuccessListener(aVoid -> {
             if (isAdded() && getContext() != null) {
                 Toast.makeText(getContext(), "Profil berhasil diperbarui", Toast.LENGTH_SHORT).show();
-                // Setelah menyimpan, kembali ke mode tampilan
                 toggleEditMode(false);
-                // Muat ulang data yang sudah diperbarui untuk ditampilkan
                 loadUserProfile();
             }
         }).addOnFailureListener(e -> {

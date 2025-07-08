@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ProfileFragment">
 
-    <!-- AppBar di bagian paling atas -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
@@ -16,7 +16,8 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/profile_menu">
 
             <TextView
                 android:id="@+id/toolbar_title"
@@ -31,12 +32,11 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Kontainer untuk konten yang bisa di-scroll -->
     <ScrollView
         android:id="@+id/scroll_view_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/button_container"
+        android:layout_alignParentBottom="true"
         android:layout_below="@id/app_bar_layout"
         android:clipToPadding="false"
         android:paddingBottom="16dp">
@@ -48,7 +48,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Kontainer untuk Tampilan Profil (Mode Lihat) -->
             <LinearLayout
                 android:id="@+id/view_profile_container"
                 android:layout_width="match_parent"
@@ -171,7 +170,6 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
-            <!-- Kontainer untuk Formulir Edit (Mode Edit) -->
             <LinearLayout
                 android:id="@+id/edit_profile_container"
                 android:layout_width="match_parent"
@@ -190,29 +188,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Kontainer untuk tombol di bagian bawah -->
-    <LinearLayout
-        android:id="@+id/button_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="16dp">
-
-        <Button
-            android:id="@+id/btn_edit_profile"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Edit Profil" />
-
-        <Button
-            android:id="@+id/logout_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="?attr/colorError"
-            android:text="Logout" />
-    </LinearLayout>
 </RelativeLayout>

@@ -1,30 +1,31 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme for Light Mode. -->
     <style name="Base.Theme.MyLearnig" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Warna Utama Aplikasi -->
         <item name="colorPrimary">@color/green_primary</item>
         <item name="colorPrimaryVariant">@color/green_dark</item>
         <item name="colorOnPrimary">@color/white</item>
 
-        <!-- Warna Sekunder -->
         <item name="colorSecondary">@color/green_primary</item>
         <item name="colorSecondaryVariant">@color/green_dark</item>
         <item name="colorOnSecondary">@color/white</item>
 
-        <!-- Warna Status Bar (disesuaikan agar konsisten dengan AppBar) -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
-        <!-- Warna Background Default -->
-        <item name="android:windowBackground">@color/grey_background_light</item>
+        <item name="android:windowBackground">@color/comfort_background</item>
 
-        <!-- PERBAIKAN: Menetapkan style default untuk AppBarLayout -->
         <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
+
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
     </style>
 
     <style name="Theme.MyLearnig" parent="Base.Theme.MyLearnig" />
 
-    <!-- Style kustom untuk AppBarLayout -->
     <style name="Widget.App.AppBarLayout" parent="Widget.Material3.AppBarLayout">
         <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:elevation">0dp</item>
     </style>
+
+    <style name="Widget.App.CardView" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/comfort_surface</item>
+    </style>
+
 </resources>
